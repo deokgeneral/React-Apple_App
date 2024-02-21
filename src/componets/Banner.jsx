@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import axios from '../api/axios';
 import requests from '../api/requests';
 import "./Banner.css";
+import styled from "styled-components";
 
 const Banner = () => {
 
   const [movie, setMovie] = useState(null);
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -41,7 +43,9 @@ const Banner = () => {
         Loading....
       </div>
     )
-  } else {
+  } 
+
+  if(!isClicked){
     return(
       <div
       className="banner"
@@ -59,7 +63,7 @@ const Banner = () => {
             {movie.videos?.results[0]?.key ? (
               <button
                 className="banner__button play"
-
+                onClick={() => setIsClicked(true)}
               >
                 Play
               </button>
@@ -69,11 +73,51 @@ const Banner = () => {
           {truncate(movie.overview, 100)}
           </p>
       </div>
-      <div className='banner--fadeBottom'/>
+      <div className='banner--fadeBottom' />
     </div>
+    )
+  }else {
+    return(
+      <>
+        <div className='youtube__button_contents'>
+        <button
+         className='youtube__button'
+         onClick={() => setIsClicked(false)}
+         >X
+        </button>
+        </div>
+        <Container>
+          <HomeContainer>
+            <Iframe
+              src={`https://www.youtube.com/embed/${movie.videos.results[0].key}?control=0&autoplay=1&mute=1`}
+            ></Iframe>
+          </HomeContainer>
+        </Container>
+      </>
     )
   }
 }
 
+const Iframe = styled.iframe`
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.65;
+  border: none;
+`;
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+`;
+
+const HomeContainer = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 export default Banner

@@ -58,3 +58,18 @@
     rgb(37, 37, 37, 0.61),
     #111);
 }
+.youtube__button{
+    position: absolute;
+    right: 0;
+    font-size: 1.75rem;
+    font-weight: 800;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+    color: white;
+    opacity: 0.5;
+    z-index: 99;
+}
+.youtube__button:hover{
+    opacity: 1;
+}
